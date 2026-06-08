@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PassGuard – Password Strength Checker & Generator</title>
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="PassGuard is a professional cybersecurity dashboard designed to analyze password strength, evaluate entropy, check for data breaches, and generate secure random credentials.">
+    <meta name="keywords" content="password checker, password generator, password security, password entropy, breached password, cybersecurity, credentials checker">
+    <meta name="author" content="PassGuard Team">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ==========================================
+         LOADING INTRO/SCANNING SCREEN
+         ========================================== -->
+    <div id="loader-overlay" class="loader-overlay">
+        <div class="cyber-spinner"></div>
+        <div id="loader-text" class="loader-text">Initializing Security Protocols...</div>
+    </div>
+
+    <!-- ==========================================
+         HEADER / NAVIGATION
+         ========================================== -->
+    <header id="main-header">
+        <div class="container nav-container">
+            <a href="#home" class="logo" id="logo-nav">
+                <div class="logo-graphic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <!-- Integrated Lock inside shield -->
+                        <rect x="9" y="11" width="6" height="5" rx="1" ry="1" fill="currentColor"/>
+                        <path d="M10 11V9a2 2 0 0 1 4 0v2"/>
+                    </svg>
+                </div>
+                <div class="logo-text-container">
+                    <div class="logo-title">Pass<span>Guard</span></div>
+                    <div class="logo-tagline">Password Strength Checker & Generator</div>
+                </div>
+            </a>
+            
+            <nav style="display: flex; align-items: center; gap: 24px;">
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home" class="nav-link active" data-target="home-view">Home</a></li>
+                    <li><a href="#checker" class="nav-link" data-target="checker-view">Password Checker</a></li>
+                    <li><a href="#generator" class="nav-link" data-target="generator-view">Password Generator</a></li>
+                    <li><a href="#tips" class="nav-link" data-target="tips-view">Security Tips</a></li>
+                </ul>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle-btn" class="icon-btn theme-toggle-btn" title="Toggle Light/Dark Mode" aria-label="Toggle Theme">
+                    <!-- Sun Icon (shows in dark mode) -->
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <!-- Moon Icon (shows in light mode) -->
+                    <svg class="moon-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </nav>
+
+            <button class="hamburger" id="hamburger-menu" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         MAIN VIEWS CONTAINER
+         ========================================== -->
+    <main class="container" style="flex: 1; padding-top: 40px; padding-bottom: 60px;">
+
+        <!-- ==========================================
+             HOME VIEW
+             ========================================== -->
+        <section id="home-view" class="section">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Enterprise-Grade Password Security
+                </div>
+                <h1 class="hero-title text-gradient">
+                    PassGuard: Password Strength<br>Checker & Generator
+                </h1>
+                <p class="hero-subtitle">
+                    Analyze, Generate, and Secure Your Passwords with Confidence. Stop cyber threats before they access your accounts.
+                </p>
+                <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#checker" class="btn btn-primary" id="hero-cta-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Check Your Password
+                    </a>
+                    <a href="#generator" class="btn btn-secondary" id="hero-secondary-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                        Generate Secure Password
+                    </a>
+                </div>
+            </div>
+
+            <!-- Introduction Section -->
+            <div class="card intro-grid grid grid-2" style="margin-bottom: 60px;">
+                <div class="intro-content">
+                    <h3 class="text-gradient-cyan-green">Understanding Password Security</h3>
+                    <p style="margin-bottom: 16px;">
+                        In today's digital landscape, passwords serve as the primary line of defense against unauthorized access. A single weak credential can grant malicious actors entry to your emails, financial details, and personal identities.
+                    </p>
+                    <p>
+                        Password security focuses on creating phrases that are easy for humans to remember but computationally impossible for hacking systems to solve within realistic timelines.
+                    </p>
+                    
+                    <div class="threat-list">
+                        <div class="threat-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <div>
+                                <div class="threat-title">Brute Force & Dictionary Attacks</div>
+                                <p class="threat-desc">Automated tools test millions of combinations and common dictionary words in seconds to crack simple passwords.</p>
+                            </div>
+                        </div>
+                        <div class="threat-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.69 14a9 9 0 0 0 .17-2V5l-8-3-3.13 1.17M12 22s8-4 8-10a8.91 8.91 0 0 0-.15-1.62M3 3l18 18M4.22 4.22A22.8 22.8 0 0 0 4 5v7c0 6 8 10 8 10a11.82 11.82 0 0 0 3.78-3.78"/></svg>
+                            <div>
+                                <div class="threat-title">Credential Stuffing</div>
+                                <p class="threat-desc">Attackers reuse stolen passwords leaked from previous data breaches to hijack matching accounts across multiple sites.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="intro-visual">
+                    <div class="cyber-shield-wrapper">
+                        <div class="shield-pulse-1"></div>
+                        <div class="shield-pulse-2"></div>
+                        <div class="shield-icon-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animated Statistics Dashboard -->
+            <div class="section-header" style="margin-bottom: 40px;">
+                <h2 class="section-title">Security Intelligence & Metrics</h2>
+                <p class="section-subtitle">Real-world statistics highlighting the critical impact of password security in modern cyber attacks.</p>
+            </div>
+            
+            <div class="grid grid-4" style="margin-bottom: 20px;">
+                <!-- Stat Card 1 -->
+                <div class="card stat-card">
+                    <div class="card-icon" style="color: var(--neon-red); border-color: rgba(255, 0, 85, 0.2); background: rgba(255, 0, 85, 0.05);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="stat-number neon-text-red" id="stat-count-1" data-val="81">0%</div>
+                    <div class="stat-label">Weak / Stolen Passwords</div>
+                    <p class="stat-desc">Of identity-related data breaches involve compromised or easily guessable passwords.</p>
+                </div>
+                <!-- Stat Card 2 -->
+                <div class="card stat-card">
+                    <div class="card-icon" style="color: var(--neon-orange); border-color: rgba(255, 159, 0, 0.2); background: rgba(255, 159, 0, 0.05);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="stat-number neon-text-orange" id="stat-count-2" data-val="60">0%</div>
+                    <div class="stat-label">Credential Re-use Rate</div>
+                    <p class="stat-desc">Of active internet users reuse identical passwords across multiple online accounts.</p>
+                </div>
+                <!-- Stat Card 3 -->
+                <div class="card stat-card">
+                    <div class="card-icon" style="color: var(--neon-green); border-color: rgba(57, 255, 20, 0.2); background: rgba(57, 255, 20, 0.05);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
+                    </div>
+                    <div class="stat-number neon-text-green" style="font-size: 2.2rem; margin-top: 10px; margin-bottom: 15px;">Secure</div>
+                    <div class="stat-label">Compromise Prevention</div>
+                    <p class="stat-desc">Utilizing robust, unique passwords significantly reduces the likelihood of unauthorized account access.</p>
+                </div>
+                <!-- Stat Card 4 -->
+                <div class="card stat-card">
+                    <div class="card-icon" style="color: var(--neon-blue); border-color: rgba(0, 240, 255, 0.2); background: rgba(0, 240, 255, 0.05);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <div class="stat-number neon-text-blue" style="font-size: 2.2rem; margin-top: 10px; margin-bottom: 15px;">Enabled</div>
+                    <div class="stat-label">Multi-Factor Shielding</div>
+                    <p class="stat-desc">Enabling Multi-Factor Authentication (MFA) dramatically improves account defense layers.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================
+             PASSWORD CHECKER VIEW
+             ========================================== -->
+        <section id="checker-view" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Password Strength Analyzer</h2>
+                <p class="section-subtitle">Input your password below to run deep-scan evaluations checking entropy, size thresholds, and pattern distributions.</p>
+            </div>
+
+            <div class="checker-layout grid grid-2">
+                <!-- Analyzer Form -->
+                <div class="card checker-container">
+                    <div class="input-group">
+                        <label for="password-checker-input" class="input-label">Enter Password for Testing</label>
+                        <div class="password-input-wrapper">
+                            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            
+                            <input type="password" id="password-checker-input" class="input-field" placeholder="Type or paste your password...">
+                            
+                            <button type="button" id="toggle-checker-visibility" class="toggle-password-btn" title="Toggle password visibility">
+                                <svg class="eye-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-off-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="checker-actions">
+                        <button type="button" id="analyze-btn" class="btn btn-primary" style="flex: 1;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            Analyze Password
+                        </button>
+                        <button type="button" id="checker-clear-btn" class="btn btn-secondary">
+                            Reset
+                        </button>
+                    </div>
+
+                    <!-- Breach Warning Card (Dynamic) -->
+                    <div id="breach-warning-card" class="strength-alert weak" style="display: none; margin-bottom: 24px; border-color: var(--neon-red); background: rgba(255, 0, 85, 0.12);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <div>
+                            <div class="strength-alert-title neon-text-red">Critical Risk: Breached Password</div>
+                            <div class="strength-alert-desc">Warning: This password is commonly used and may have appeared in data breaches. Please create a stronger, unique password immediately.</div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Dashboard Details -->
+                    <div class="analysis-dashboard">
+                        <div class="dashboard-header">
+                            <span class="score-title">Security Evaluation Score:</span>
+                            <span id="checker-score" class="score-display neon-text-red">0/100</span>
+                        </div>
+                        
+                        <!-- Strength Progress Bar -->
+                        <div class="progress-container">
+                            <div id="checker-progress-bar" class="progress-bar" style="background-color: var(--neon-red); width: 0%;"></div>
+                        </div>
+
+                        <!-- Dynamic Alert Message -->
+                        <div id="checker-alert" class="strength-alert weak">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <div>
+                                <div id="checker-alert-status" class="strength-alert-title">Weak Password</div>
+                                <div id="checker-alert-message" class="strength-alert-desc">Enter a password above to begin security scanning and analysis.</div>
+                            </div>
+                        </div>
+
+                        <!-- Entropy Calculator Display -->
+                        <div class="entropy-dashboard" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span class="score-title">Password Entropy:</span>
+                                <span id="entropy-score" class="score-display neon-text-blue" style="font-size: 1.2rem;">0.0 bits</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <span class="score-title">Classification:</span>
+                                <span id="entropy-class" class="rating-badge weak" style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase;">None</span>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; display: flex; align-items: center; gap: 6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--neon-blue); flex-shrink: 0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                                Entropy measures how difficult a password is to crack.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Complexity Criteria checklist -->
+                    <div class="criteria-container">
+                        <div class="criteria-title">Complexity Criteria Checklist</div>
+                        <div class="criteria-grid">
+                            <div id="criterion-length" class="criterion-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                                At least 8 characters
+                            </div>
+                            <div id="criterion-uppercase" class="criterion-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                                Uppercase Letters (A-Z)
+                            </div>
+                            <div id="criterion-lowercase" class="criterion-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                                Lowercase Letters (a-z)
+                            </div>
+                            <div id="criterion-numbers" class="criterion-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                                Numbers (0-9)
+                            </div>
+                            <div id="criterion-specials" class="criterion-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+                                Special Symbols (@, #, $, etc.)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checker Sidebar (Suggestions & Preset Demos) -->
+                <div class="checker-sidebar">
+                    <!-- Suggestions Card -->
+                    <div class="card suggestions-card">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6m-6-4h6m-7.61-4a5.5 5.5 0 1 1 7.778 0A5.5 5.5 0 0 1 12 14v2h-1a2 2 0 0 1-2-2V9.9z"/></svg>
+                            Security Suggestions
+                        </h3>
+                        <ul id="checker-suggestions-list" class="suggestions-list">
+                            <li class="suggestion-empty">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
+                                Waiting for password analysis...
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Interactive Demonstration Panel -->
+                    <div class="card demos-card">
+                        <h3>Interactive Demonstrations</h3>
+                        <p style="font-size: 0.85rem; margin-bottom: 16px;">Click on any sample card below to test its strength and review the evaluation reasoning:</p>
+                        
+                        <div class="demo-list">
+                            <!-- Weak Demo -->
+                            <div class="demo-item" data-pass="12345">
+                                <div class="demo-header">
+                                    <span class="demo-example">12345</span>
+                                    <span class="demo-badge weak">Weak</span>
+                                </div>
+                                <div class="demo-reason-title">Vulnerability Analysis</div>
+                                <ul class="demo-reasons">
+                                    <li>Too short (5 characters)</li>
+                                    <li>No uppercase or special symbols</li>
+                                    <li>Sequential number pattern (easy guess)</li>
+                                </ul>
+                            </div>
+
+                            <!-- Medium Demo -->
+                            <div class="demo-item" data-pass="password123">
+                                <div class="demo-header">
+                                    <span class="demo-example">password123</span>
+                                    <span class="demo-badge medium">Medium</span>
+                                </div>
+                                <div class="demo-reason-title">Vulnerability Analysis</div>
+                                <ul class="demo-reasons">
+                                    <li>Contains letters and numbers</li>
+                                    <li>Missing special characters</li>
+                                    <li>Missing uppercase letters</li>
+                                    <li>Uses a common word dictionary base</li>
+                                </ul>
+                            </div>
+
+                            <!-- Strong Demo -->
+                            <div class="demo-item" data-pass="Password123@">
+                                <div class="demo-header">
+                                    <span class="demo-example">Password123@</span>
+                                    <span class="demo-badge strong">Strong</span>
+                                </div>
+                                <div class="demo-reason-title">Vulnerability Analysis</div>
+                                <ul class="demo-reasons">
+                                    <li>Satisfies length requirement (12 chars)</li>
+                                    <li>Uppercase, lowercase, numbers included</li>
+                                    <li>Contains special characters</li>
+                                    <li>Vastly increased mathematical entropy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================
+             PASSWORD GENERATOR VIEW
+             ========================================== -->
+        <section id="generator-view" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Secure Password Generator</h2>
+                <p class="section-subtitle">Configure the sliders and variables below to generate cryptographically random, highly secure passwords.</p>
+            </div>
+
+            <div class="generator-layout grid grid-2">
+                <!-- Configuration panel -->
+                <div class="card generator-container">
+                    <!-- Display block -->
+                    <div class="display-box-wrapper">
+                        <div id="generated-password-display" class="generated-password placeholder">Click Generate Button</div>
+                        <div class="generator-action-icons">
+                            <button type="button" id="copy-generated-btn" class="icon-btn copy-btn" title="Copy Password" style="width: 110px; gap: 8px; font-family: var(--font-cyber); font-size: 0.85rem; font-weight: 600;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Realtime Rating Indicator -->
+                    <div class="rating-indicator">
+                        <span>Security strength rating:</span>
+                        <span id="generator-rating-badge" class="rating-badge weak" style="background: rgba(255, 0, 85, 0.15); color: var(--neon-red); border: 1px solid rgba(255, 0, 85, 0.3);">UNCONFIGURED</span>
+                    </div>
+
+                    <!-- Slider -->
+                    <div class="slider-group">
+                        <div class="slider-header">
+                            <span class="input-label" style="margin-bottom: 0;">Password Length</span>
+                            <span id="length-val-display" class="slider-val">12</span>
+                        </div>
+                        <div class="range-slider-wrapper">
+                            <input type="range" id="length-slider" class="range-slider" min="8" max="20" value="12">
+                        </div>
+                    </div>
+
+                    <!-- Toggles -->
+                    <div class="criteria-title" style="margin-bottom: 16px;">Characters to Include</div>
+                    <div class="options-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="opt-uppercase" checked>
+                            <span class="checkbox-custom"></span>
+                            Uppercase Letters (A-Z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="opt-lowercase" checked>
+                            <span class="checkbox-custom"></span>
+                            Lowercase Letters (a-z)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="opt-numbers" checked>
+                            <span class="checkbox-custom"></span>
+                            Numbers (0-9)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="opt-specials" checked>
+                            <span class="checkbox-custom"></span>
+                            Special Symbols (!@#$)
+                        </label>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="checker-actions" style="margin-bottom: 0;">
+                        <button type="button" id="generate-btn" class="btn btn-primary" style="flex: 1;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            Generate Password
+                        </button>
+                        <button type="button" id="generator-reset-btn" class="btn btn-secondary">
+                            Reset Options
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Examples & Sidebar -->
+                <div class="generator-sidebar">
+                    <div class="card examples-card">
+                        <h3>Generated Examples</h3>
+                        <p style="font-size: 0.85rem; margin-bottom: 16px;">Click the copy icon to quickly grab these complex, pre-calculated security presets:</p>
+                        
+                        <div class="example-outputs">
+                            <!-- Example 1 -->
+                            <div class="example-item">
+                                <span class="example-text" id="preset-text-1">G#7mP@2xK!9q</span>
+                                <button type="button" class="copy-mini-btn" data-target="preset-text-1" title="Copy Preset">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                </button>
+                            </div>
+                            <!-- Example 2 -->
+                            <div class="example-item">
+                                <span class="example-text" id="preset-text-2">Z@8kR$4vN#7a</span>
+                                <button type="button" class="copy-mini-btn" data-target="preset-text-2" title="Copy Preset">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                </button>
+                            </div>
+                            <!-- Example 3 -->
+                            <div class="example-item">
+                                <span class="example-text" id="preset-text-3">T!5wL@8cX#2m</span>
+                                <button type="button" class="copy-mini-btn" data-target="preset-text-3" title="Copy Preset">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================
+             CYBER SECURITY TIPS VIEW
+             ========================================== -->
+        <section id="tips-view" class="section" style="display: none;">
+            <div class="section-header">
+                <h2 class="section-title">Cybersecurity Best Practices</h2>
+                <p class="section-subtitle">Beyond passwords: educate yourself on critical defensive concepts to shield your identity across the web.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <!-- Tip 1: Strong Password Practices -->
+                <div class="card tip-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                    </div>
+                    <h3 class="card-title">Strong Password Practices</h3>
+                    <p class="card-desc">Create passwords that are at least 12 characters, mixing case classes, numbers, and symbols. Avoid personal attributes like birthdates or names which are easily accessible to social engineers.</p>
+                </div>
+
+                <!-- Tip 2: Multi-Factor Authentication -->
+                <div class="card tip-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg>
+                    </div>
+                    <h3 class="card-title">Multi-Factor Authentication</h3>
+                    <p class="card-desc">Enable MFA across all accounts. Even if hackers crack your password, MFA requires a secondary device token (Authenticator app, security key) to authorize login, preventing up to 99% of bulk attacks.</p>
+                </div>
+
+                <!-- Tip 3: Phishing Awareness -->
+                <div class="card tip-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <h3 class="card-title">Phishing Awareness</h3>
+                    <p class="card-desc">Carefully inspect sender domains, attachments, and URLs. Phishing sites mimic legitimate services (banks, workplaces) to trick you into typing your secure credentials into fake login fields.</p>
+                </div>
+
+                <!-- Tip 4: Social Engineering Prevention -->
+                <div class="card tip-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="card-title">Social Engineering Prevention</h3>
+                    <p class="card-desc">Be skeptical of unscheduled support calls or urgent messages demanding sensitive inputs. Attackers rely on human psychological manipulation (fear, urgency) to bypass strict technical controls.</p>
+                </div>
+
+                <!-- Tip 5: Secure Browsing -->
+                <div class="card tip-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3 class="card-title">Secure Browsing</h3>
+                    <p class="card-desc">Verify websites implement HTTPS (secure padlock icon) before exchanging sensitive details. Avoid public Wi-Fi networks for transactions unless protected by a reputable Virtual Private Network (VPN).</p>
+                </div>
+
+                <!-- Tip 6: Password Manager Benefits -->
+                <div class="card tip-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+                    </div>
+                    <h3 class="card-title">Password Manager Benefits</h3>
+                    <p class="card-desc">Utilize password managers (e.g. Bitwarden, 1Password) to store and auto-fill encrypted logins. They allow you to maintain distinct, highly complex credentials across hundreds of sites without memory fatigue.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         TOAST / NOTIFICATIONS CONTAINER
+         ========================================== -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="#home" class="footer-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <rect x="9" y="11" width="6" height="5" rx="1" ry="1" fill="currentColor"/>
+                        <path d="M10 11V9a2 2 0 0 1 4 0v2"/>
+                    </svg>
+                    <span>PassGuard</span>
+                </a>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; max-width: 400px; line-height: 1.4;">Analyze, Generate, and Secure Your Passwords with Confidence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Javascript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
